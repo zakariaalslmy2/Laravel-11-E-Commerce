@@ -2,6 +2,12 @@
 
 namespace App\Http\Middleware;
 
+
+
+
+
+namespace App\Http\Middleware;
+
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -16,21 +22,16 @@ class AuthAdmin
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {if(Auth::check()){
-
-
-        if(Auth::users()->type==="Adm"){
-
-            return $next($request);
+    {
+        if (Auth::check()) {
+            if (Auth::user()->type === "ADM") {
+                return $next($request);
+            } else {
+                Session::flash('error', 'You do not have admin access.');
+                return redirect()->route('home.index');
+            }
+        } else {
+            return redirect()->route('login');
         }
-        else{
-            Session::flash();
-            return redirect()-route('login');
-        }
-    }
-    else{
-        return redirect()-route('login');
-    }
-
     }
 }

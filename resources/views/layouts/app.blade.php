@@ -3,13 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="surfside media" />
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
@@ -389,8 +385,6 @@
         </div>
       </nav>
     </div>
-
-
     <header id="header" class="header header-fullwidth header-transparent-bg">
       <div class="container">
         <div class="header-desk header-desk_type_1">
@@ -402,11 +396,6 @@
 
           <nav class="navigation ms-auto" style="direction: rtl">
             <ul class="navigation__list list-unstyled d-flex ">
-
-
-
-
-
               <li class="navigation__item">
                 <a href="index.html" class="navigation__link">الرئسية</a>
               </li>
@@ -424,7 +413,6 @@
               </li>
             </ul>
           </nav>
-
           <div class="header-tools d-flex align-items-center">
             <div class="header-tools__item hover-container">
               <div class="js-hover__open position-relative">
@@ -471,15 +459,52 @@
                 </form>
               </div>
             </div>
+            @auth
+            <div class="header-tools__item hover-container">
+                <a href="{{ auth::user()->type === 'ADM' ? route('admin.index') : route('user.index') }}" class="header-tools__item">
+                    <span class="pr-6px">{{ auth::user()->name }}</span>
+                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use href="#icon_user" />
+                    </svg>
+                </a>
+            </div>
+        @else
+            <div class="header-tools__item hover-container">
+                <a href="{{ route('login') }}" class="header-tools__item">
+                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use href="#icon_user" />
+                    </svg>
+                </a>
+            </div>
+        @endauth
+
+
+            {{-- @guest
 
             <div class="header-tools__item hover-container">
-              <a href="{{ route('login') }}" class="header-tools__item">
-                <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <use href="#icon_user" />
-                </svg>
-              </a>
-            </div>
+                <a href="{{ auth::user()->type==='ADM' ? route('admin.index'):route('user');  }}" class="header-tools__item">
+                  <span class="pr-6px"> {{ auth::user()->name }} </span>
+                  <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <use href="#icon_user" />
+                  </svg>
+                </a>
+              </div>
+
+
+
+              @else
+              <div class="header-tools__item hover-container">
+                <a href="{{ route('login') }}" class="header-tools__item">
+                  <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <use href="#icon_user" />
+                  </svg>
+                </a>
+              </div>
+
+
+            @endguest --}}
 
             <a href="wishlist.html" class="header-tools__item">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -658,7 +683,6 @@
 
     <div id="scrollTop" class="visually-hidden end-0"></div>
     <div class="page-overlay"></div>
-
     <script src="{{ asset('assets/js/plugins/jquery.min.js')}}"></script>
     <script src="{{ asset('assets/js/plugins/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset('assets/js/plugins/bootstrap-slider.min.js')}}"></script>
